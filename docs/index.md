@@ -5,17 +5,17 @@
 ## 目录
 
 - [Chisel](Chisel.md)
+- [GDB](GDB.md)
 - [Makefile](Makefile.md)
 - [Verilator](Verilator.md)
-- [GDB](GDB.md)
 
 
 ## 更新日志
 
 ### 当前版本
 
-v0.1：最初版本
+v0.2：更新 Chisel 部分，添加了常见的组合电路实例以及常用的语法（switch，for循环）。
 
 ### 历史版本
 
-暂无
+v0.1：最初版本

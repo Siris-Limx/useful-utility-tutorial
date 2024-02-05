@@ -29,7 +29,7 @@ Chisel 使用 `Width` 类型来表示比特向量的长度。
 
 "hff".U             // hexadecimal representation of 255
 "o377".U            // octal representation of 255
-" b1111_1111 ".U    // binary representation of 255, the underscore is ignored
+" b1111_1111".U    // binary representation of 255, the underscore is ignored
 ```
 
 ！！！注意：定义宽度时不能遗漏 `.W`。 `1.U(32)` 不会定义表示 1 的 32 位宽常量。相反，表达式 (32) 被解释为第32位，这会导致结果是 0。
@@ -71,7 +71,7 @@ w := a & b
 
 ```scala
 val sign = x(31)                    // sign bit of x
-val lowByte = largeWord (7, 0)      // low byte of largeWord
+val lowByte = largeWord(7, 0)      // low byte of largeWord
 val word = highByte ## lowByte      // concatenation, the same as Cat(highByte, lowByte)
 ```
 
@@ -109,7 +109,7 @@ val bothReg = RegNext(d, 0.U)   // register with next value of d, initialized wi
 下面是一个计数器实例：
 
 ```scala
-val cntReg = RegInit (0.U(8.W))
+val cntReg = RegInit(0.U(8.W))
 cntReg := Mux(cntReg === 9.U, 0.U, cntReg + 1.U)
 ```
 
@@ -150,7 +150,7 @@ val channel = ch    // A bundle can be referenced as a whole
 通过使用索引访问各个元素，封装在 `Wire` 中的 `Vec` 只是一个多路复用器（multiplexer）。
 
 ```scala
-val v = Wire(Vec(3, UInt (4.W)))
+val v = Wire(Vec(3, UInt(4.W)))
 
 v(0) := 1.U
 v(1) := 3.U
@@ -172,7 +172,7 @@ val defVecSig = VecInit(d, e, f)
 我们可以使用 `Vec` 来定义寄存器数组。
 
 ```scala
-val registerFile = Reg(Vec (32, UInt (32.W)))
+val registerFile = Reg(Vec (32, UInt(32.W)))
 registerFile(index) := dIn
 val dOut = registerFile(index)
 ```
@@ -195,7 +195,7 @@ initReg (2) := f
 
 ```scala
 val resetRegFile =
-    RegInit(VecInit(Seq.fill (32) (0.U(32.W))))   // 32-bit register file, initialized with 0
+    RegInit(VecInit(Seq.fill(32) (0.U(32.W))))   // 32-bit register file, initialized with 0
 val rdRegFile = resetRegFile(sel)
 ```
 
@@ -213,7 +213,7 @@ val vector = Vec(4, UInt(8.W))
 当我们想要一个有复位值的 `Bundle` 类型的寄存器时，我们首先创建该 `Bundle` 的 `Wire`，根据需要设置各个字段，然后将此 `Bundle` 传递给 `RegInit`。
 
 ```scala
-val initVal    = Wire(new Channel ())
+val initVal    = Wire(new Channel())
 initVal.data  := 0.U
 initVal.valid := false.B
 val channelReg = RegInit(initVal)
@@ -301,8 +301,8 @@ class Adder extends Module {
 
 class Register extends Module {
 	val io = IO(new Bundle {
-		val d = Input(UInt (8.W))
-		val q = Output(UInt (8.W))
+		val d = Input(UInt(8.W))
+		val q = Output(UInt(8.W))
 	})
 
 	val reg = RegInit (0.U)
@@ -396,8 +396,8 @@ class Decode extends Module {
 	// ... Implementation of decode
 }
 
-val fetch = Module(new Fetch ())
-val decode = Module(new Decode ())
+val fetch = Module(new Fetch())
+val decode = Module(new Decode())
 
 fetch.io <> decode.io
 ```
@@ -424,7 +424,7 @@ class BUFGCE extends BlackBox(Map("SIM_DEVICE" -> "7SERIES")) {
 }
 ```
 
-上述代码中的 `Map("SIM_DEVICE" -> "7SERIES")` 生成的 Verilog 代码为 `parameter SIM_DEVICE = "7SERIES"`。
+上述代码中 `Map("SIM_DEVICE" -> "7SERIES")` 生成的 Verilog 代码为 `parameter SIM_DEVICE = "7SERIES"`。
 
 #### ExtModule
 
@@ -444,7 +444,7 @@ class BlackBoxAdderIO extends Bundle {
 
 class PathBlackBoxAdder extends HasBlackBoxPath {
 	val io = IO(new BlackBoxAdderIO)
-	addPath("./src/main/resources/ PathBlackBoxAdder.v")
+	addPath("./src/main/resources/PathBlackBoxAdder.v")
 }
 ```
 
@@ -452,3 +452,142 @@ class PathBlackBoxAdder extends HasBlackBoxPath {
 
 注意，`HasBlackBoxPath` 是 `BlackBox` 类的特征（trait），这意味着 `class Example extends BlackBox with HasBlackBoxInline` 等价于 `class Example extends HasBlackBoxInline`.
 
+## 组合逻辑基本模块
+
+### 组合逻辑电路
+
+最简单的组合逻辑形式是布尔表达式，可以为其指定一个名称：
+
+```scala
+    val e = (a & b) | c
+```
+
+该表达式可以在其他表达式中重用：
+
+```scala
+    val f = ~e
+```
+
+这样组合逻辑的表达式被认为是常量（根本原因是使用了 Scala 的 `val`）。
+使用 `=` 给 e 赋值会导致 Scala 编译器错误：`reassignment to val`。
+尝试使用Chisel运算符 `:=` 会导致错误：`Cannot reassign to read-only.`。
+
+但是，当我们对组合电路进行条件更新（conditional update）时，我们可以对同一变量进行多次赋值。
+
+```scala
+val w = WireDefault(0.U)
+
+ when (cond) {
+    w := 1.U
+ } .elsewhen (cond2) {
+    w := 2.U
+ } .otherwise {
+    w := 3.U
+ }
+```
+
+注意 `.elsewhen` 中的 `.` 不能忽略。
+
+### 解码器
+
+我们可以用真值表来描述解码器的功能。
+Chisel 中的 `switch` 语句用来将逻辑描述为真值表。
+要使用 `switch` 语句，我们需要导入一个Chisel包：`import chisel3.util._`。
+
+```scala
+import chisel3.util._
+
+result := 0.U
+
+switch(sel) {
+    is (0.U) { result := 1.U}
+    is (1.U) { result := 2.U}
+    is (2.U) { result := 4.U}
+    is (3.U) { result := 8.U}
+}
+```
+
+注意，即使我们枚举所有可能的输入值，Chisel 仍然需要我们指定一个默认值。
+该默认值永远不会被使用，因此会被综合工具优化掉。
+这种做法的目的是避免组合电路生成锁存器。
+
+我们也可以用 Chisel 移位操作 `<<` 来表示解码器。
+
+```scala
+result := 1.U << sel
+```
+
+### 编码器
+
+为了表达更大的编码器，我们需要编写一个硬件生成器（hardware generator）。
+因此，我们需要引入 Scala 循环结构。
+
+```scala
+ val v = Wire(Vec(16, UInt(4.W)))
+ v(0) := 0.U
+
+ // Loops i from 0 to 15
+ for (i <- 1 until 16) {
+    v(i) := Mux(hotIn(i), i.U, 0.U) | v(i-1)
+ }
+ val encOut = v(15)
+```
+
+编码器的输入是 `hotIn`，输出是 `encOut`。`Vec` 元素 `0` 是默认情况 (0)，也表示 `hotIn` 中最低有效位 (LSB) 为 1 时的输出值。
+
+如果 `hotIn` 中位置 `i` 处 bit 值为 1，则多选器输出为该索引 `i`，否则为 0。
+最后，我们需要合并所有向量元素以获得单个输出。
+由于当输入中对应位为 0 时向量元素为 0，因此我们可以简单地使用 OR 函数将所有元素组合起来。
+我们称这个操作为归约（reduce）。
+这里我们执行 OR 归约 （OR reduction）。
+
+### 仲裁器
+
+我们实现一个 3-bit 的仲裁器。
+它由 3 条请求信号（r0-r2）和 3 条许可信号（g0-g2）组成。
+仲裁器每次只会响应一个请求信号，并优先选择编号较小的请求信号。
+
+```scala
+val grant = VecInit(false.B, false.B, false.B)
+val notGranted = VecInit(false.B, false.B)
+
+grant(0) := request(0)
+notGranted(0) := !grant(0)
+grant(1) := request(1) && notGranted(0)
+notGranted(1) := !grant(1) && notGranted(0)
+grant(2) := request(2) && notGranted(1)
+```
+
+对于更大的仲裁器，我们需要使用循环结构。
+
+```scala
+val grant = VecInit.fill(n)(false.B)
+val notGranted = VecInit.fill(n)(false.B)
+
+grant(0) := request(0)
+notGranted(0) := !grant(0)
+for (i <- 1 until n) {
+grant(i) := request(i) && notGranted(i-1)
+notGranted(i) := !grant(i) && notGranted(i-1)
+}
+```
+
+使用循环与手写版本的差别是，我们为最后一个请求（n-1）生成了 `notGranted` 信号。
+该信号未被使用，因此综合工具会将其优化掉。
+
+### 优先编码器
+
+在我们最初的编码器设计中，我们必须假设输入是单热编码（one-hot encoded）的，这意味着只允许一位为 1。
+多个位都置位的输入是非法的，会导致未定义的行为。
+
+我们可以通过将编码器与仲裁电路相结合来解决这个问题，仲裁电路仅选择最高优先级的位。
+
+### 比较器
+
+比较只需要一行代码就可以完成。
+因此，比较函数通常直接在其他模块中使用，而不是封装成一个单独的模块。
+
+```scala
+val equ = a === b
+val gt = a > b
+```
