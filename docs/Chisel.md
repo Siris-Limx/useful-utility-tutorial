@@ -1,6 +1,6 @@
 ## 介绍
 
-Chisel是一个**硬件构建语言**（Hardware Construct Language），它是Scala的一个库。Chisel的设计目标是利用Scala的强大特性，同时又能够生成高效的硬件描述。Chisel的设计思想是将硬件描述看作是一个函数式的数据结构，这样可以利用Scala的函数式特性来描述硬件。
+Chisel是一个**硬件构建语言**（Hardware Construct Language），它是 Scala 的一个库。Chisel 的设计目标是利用 Scala 的强大特性，同时又能够生成高效的硬件描述。Chisel 的设计思想是将硬件描述看作是一个函数式的数据结构，这样可以利用 Scala 的函数式特性来描述硬件。
 
 ## 基本组成
 
@@ -25,18 +25,19 @@ Chisel 使用 `Width` 类型来表示比特向量的长度。
 ```scala
 0.U                 // defines a UInt constant of 0
 -3.S                // defines a SInt constant of -3
-3.U(4.W)            // An 4-bit constant of 3
+3.U(4.W)            // a 4-bit constant of 3
 
 "hff".U             // hexadecimal representation of 255
 "o377".U            // octal representation of 255
-" b1111_1111".U    // binary representation of 255, the underscore is ignored
+"b1111_1111".U      // binary representation of 255, the underscore is ignored
 ```
 
-！！！注意：定义宽度时不能遗漏 `.W`。 `1.U(32)` 不会定义表示 1 的 32 位宽常量。相反，表达式 (32) 被解释为第32位，这会导致结果是 0。
+！！！注意：定义宽度时不能遗漏 `.W`。 `1.U(32)` 并不代表 32 位宽的 1。
+表达式 `(32)` 被解释为第 32 位，所以 `1.U(32)` 结果是 0。
 
-Chisel 会自动推断常量的宽度，如果没有指定位宽，那么 Chisel 会默认使用能表示该常数的最小位宽。
+Chisel 会自动推断常量的位宽，如果没有指定位宽，那么 Chisel 会默认使用能表示该常数的最小位宽。
 例如，`3.U` 会被推断为 `3.U(2.W)`，因为 3 可以用 2 位表示。
-尽管 Chisel 会推断信号和寄存器所需的位宽，但在创建硬件对象时指定预期的位宽度是一个很好的习惯。
+尽管 Chisel 会推断信号所需的位宽，但在创建硬件对象时指定位宽是一个很好的习惯。
 
 为了表示逻辑值，Chisel 定义了 `Bool` 类型。
 以下代码将 Scala 布尔常量 true 和 false 转换为 Chisel `Bool` 常量。
@@ -55,41 +56,25 @@ false.B
 val logic = (a & b) | c
 ```
 
-该电路可以用于向量，而不仅仅是与 AND 和 OR 电路组合的 Wire。
+该电路描述可以用于向量，而不仅仅是与 AND 和 OR 电路组合的 Wire。
 
-运算的结果宽度是加法和减法运算符的最大宽度、乘法的两个宽度之和，通常是除法和模运算的分子宽度。
-
-信号也可以首先定义为某种类型的 `Wire`。
-之后，我们可以使用 `:=` 更新运算符（update operator）赋值。
-
-```scala
-val w = Wire(UInt())
-w := a & b
-```
+对于加法和减法，运算的结果位宽是源操作数的最大宽度；对于乘法，结果位宽是两个操作数位宽之和；对于除法和取模，通常是分子的位宽。
 
 数据的截取、拼接、扩展等操作如下：
 
 ```scala
 val sign = x(31)                    // sign bit of x
-val lowByte = largeWord(7, 0)      // low byte of largeWord
+val lowByte = largeWord(7, 0)       // low byte of largeWord
 val word = highByte ## lowByte      // concatenation, the same as Cat(highByte, lowByte)
 ```
 
-Chisel 提供了多选器的抽象：
-
-```scala
-val result = Mux(sel, a, b)
-```
-
-当 `sel`为 `true.B` 时选择 a，否则选择b。`sel` 的类型是 Chisel `Bool`；输入 a 和 b 可以是任何 Chisel 基本类型或聚合（束或向量）（aggregate such as bundles and vectors），只要它们是相同类型即可。
-
 ### 寄存器
 
-Chisel 中的寄存器**隐式连接**到全局时钟并在上升沿更新
-当在寄存器声明中提供初始化值时，它使用连接到全局复位信号的**同步复位**。
+Chisel 中的寄存器**隐式连接**到全局时钟并在上升沿更新。
+如果在声明寄存器时提供了初始化值，它将连接到全局的**同步复位**信号。
 
 ```scala
-val reg = RegInit(0.U(8.W))    // 8-bit register, initialized with 0 at reset
+val reg = RegInit(0.U(8.W))     // 8-bit register, initialized with 0 at reset
 reg := d                        // connect an input to the register
 val q = reg                     // the output of the register can be used just with the name in an expression
 ```
@@ -113,17 +98,19 @@ val cntReg = RegInit(0.U(8.W))
 cntReg := Mux(cntReg === 9.U, 0.U, cntReg + 1.U)
 ```
 
+> 有关 `Mux` 的介绍，请参考[多选器](###多选器)。
+
 ### Bundle 和 Vec 结构
 
 Chisel 提供了两种聚合（aggregate）数据结构来组织多个信号：`Bundle` 和 `Vec`。
-`Bundle` 将不同类型的信号分组为命名字段。
+`Bundle` 将不同类型的信号分为一组。
 `Vec` 表示相同类型的信号（元素）的可索引集合。
 
 #### Bundle
 
-我们可以定义一个 `Bundle` 类的继承，并将字段列为构造函数块中的 val。
-要使用 bundle，我们使用 `new` 创建它并将其封装到 `Wire` 中。
-使用`.`符号访问这些字段。
+我们可以定义一个 `Bundle` 类的继承，并使用 `val` 定义不同字段（field）。
+要使用 `Bundle`，我们需要用 `new` 创建它并将其封装到 `Wire` 中。
+使用`.`符号访问其中的字段。
 
 ```scala
 class Channel() extends Bundle {
@@ -140,7 +127,7 @@ val b     = ch.valid
 val channel = ch    // A bundle can be referenced as a whole
 ```
 
-点表示法（dot notation）在面向对象语言中很常见，其中 `x.y` 表示 `x` 是对象的引用，`y` 是该对象的字段。
+> 点表示法（dot notation）在面向对象语言中很常见，其中 `x.y` 表示 `x` 是对象的引用，`y` 是该对象的字段。
 
 #### Vec
 
@@ -179,23 +166,23 @@ val dOut = registerFile(index)
 
 向量寄存器也可以被初始化。
 初始化的值这就是寄存器复位的值。
-为了初始化寄存器文件，我们使用带有初始值的 `VecInit`，并将其封装到 `RegInit` 中。
+例如，为了初始化寄存器堆（register file），我们使用带有初始值的 `VecInit`，并将其封装到 `RegInit` 中。
 
 ```scala
-val initReg = RegInit(VecInit (0.U(3.W), 1.U, 2.U))
+val initReg = RegInit(VecInit(0.U(3.W), 1.U, 2.U))
 val resetVal = initReg(sel)
 initReg (0) := d
 initReg (1) := e
 initReg (2) := f
 ```
 
-如果我们想将一个寄存器文件的所有元素重置为相同的值（可能是 0），我们可以使用 Scala 序列 `Seq`。
-`Seq` 包含一个创建函数 `fill`，用于用相同的值初始化序列。
+如果我们想将一个寄存器堆所有元素的初始值设为为相同的值，我们可以使用 Scala 序列 `Seq`。
+`Seq` 包含一个创建函数 `fill`，它用相同的值初始化序列。
 `VecInit` 可以使用包含 Chisel 类型的 `Seq` 来构造。
 
 ```scala
 val resetRegFile =
-    RegInit(VecInit(Seq.fill(32) (0.U(32.W))))   // 32-bit register file, initialized with 0
+    RegInit(VecInit(Seq.fill(32)(0.U(32.W))))   // 32-bit register file, initialized with 0
 val rdRegFile = resetRegFile(sel)
 ```
 
@@ -233,8 +220,8 @@ assignWord (15, 8) := highByte          // WRONG!!!
 val assignWord = Wire(UInt(16.W))
 
 class Split extends Bundle {
-val high = UInt (8.W)
-val low = UInt (8.W)
+val high = UInt(8.W)
+val low = UInt(8.W)
 }
 
 val split   = Wire(new Split())
@@ -243,7 +230,7 @@ split.high := highByte
 assignWord := split.asUInt()    // casting that bundle with asUInt() to a UInt
 ```
 
-该解决方案的一个缺点是需要知道 `Bundle` 字段以何种顺序合并到单个向量。
+该解决方案的一个缺点是需要知道 `Bundle` 字段以何种顺序合并为单个向量。
 
 ### Wire, Reg 和 IO
 
@@ -263,15 +250,8 @@ number    := 10.U
 reg       := value - 3.U
 ```
 
-请注意 Scala 赋值运算符 “=” 和 Chisel 运算符 “:=” 之间的细微差别。
-创建硬件对象（并为其命名）时使用 Scala 的 “=” 运算符，但在为现有硬件对象分配或重新分配值时使用 Chisel 的 “:=” 运算符。
-
-在组合分支逻辑中，可以根据条件分配组合值，但需要在条件的每个分支中分配它们，否则会描述一个锁存器，Chisel 编译器会报错。
-最好的办法是在创建 `Wire` 时定义默认值。
-
-```scala
-val number = WireDefault (10.U(4.W))
-```
+请注意 Scala 赋值运算符 `=` 和 Chisel 运算符 `:=` 之间的差别。
+创建硬件对象（并为其命名）时使用 Scala 的 `=` 运算符，但在为现有硬件对象赋值时使用 Chisel 的 `:=` 运算符。
 
 ## 模块
 
@@ -281,7 +261,7 @@ val number = WireDefault (10.U(4.W))
 每个模块都继承自类 `Module` 并用 `io` 字段表示接口。
 接口由 `Bundle` 定义，并被封装在 `IO()` 中。
 `Bundle` 中包含表示模块输入和输出端口的字段。
-通过将字段封装到 `Input()` 或 `Output()` 中来定义方向。
+通过将信号封装到 `Input()` 或 `Output()` 中来定义方向。
 方向是从模块本身的角度来看的。
 
 ```scala
@@ -338,39 +318,9 @@ class Count10 extends Module {
 }
 ```
 
-通过使用 `new` 来实例化模块，并将它封装到 `Module()` 中。
+实例化的过程是使用 `new` 声明，并将它封装到 `Module()` 中。
 
-### 实用功能
-
-#### switch
-
-`switch` 函数是一个多路选择器，它的行为类似于 `switch` 语句。
-
-```scala
-class Alu extends Module {
-	val io = IO(new Bundle {
-		val a = Input(UInt(16.W))
-		val b = Input(UInt(16.W))
-		val fn = Input(UInt(2.W))
-		val y = Output(UInt(16.W))
-	})
-
-	// some default value is needed
-	io.y := 0.U
-
-	// The ALU selection
-	switch(io.fn) {
-	is(0.U) { io.y := io.a + io.b }
-	is(1.U) { io.y := io.a - io.b }
-	is(2.U) { io.y := io.a | io.b }
-	is(3.U) { io.y := io.a & io.b }
-	}
-}
-```
-
-要使用这个功能，我们需要导入一个Chisel包：`import chisel3.util._`
-
-#### Bulk Connections
+### Bulk Connections
 
 为了连接具有多个 IO 端口的模块，Chisel 提供了批量连接运算符 `<>`。
 Chisel 会将 `io` 字段中名称相同的端口连接起来。
@@ -450,7 +400,7 @@ class PathBlackBoxAdder extends HasBlackBoxPath {
 
 上述代码中的 `addPath` 函数指定了 Verilog 模块的路径。
 
-注意，`HasBlackBoxPath` 是 `BlackBox` 类的特征（trait），这意味着 `class Example extends BlackBox with HasBlackBoxInline` 等价于 `class Example extends HasBlackBoxInline`.
+注意，`HasBlackBoxPath` 是 `BlackBox` 类的特征（trait），这意味着 `class Example extends BlackBox with HasBlackBoxInline` 等价于 `class Example extends HasBlackBoxInline`。
 
 ## 组合逻辑基本模块
 
@@ -486,7 +436,23 @@ val w = WireDefault(0.U)
  }
 ```
 
+在创建 `Wire` 时定义默认值可以有效防止锁存器的生成。
+
+```scala
+val number = WireDefault (10.U(4.W))
+```
+
 注意 `.elsewhen` 中的 `.` 不能忽略。
+
+### 多选器
+
+Chisel 提供了多选器的抽象：
+
+```scala
+val result = Mux(sel, a, b)
+```
+
+当 `sel`为 `true.B` 时选择 a，否则选择b。`sel` 的类型是 Chisel `Bool`；输入 a 和 b 可以是任何 Chisel 基本类型或聚合类型（aggregate such as bundles and vectors），只要它们是相同类型即可。
 
 ### 解码器
 
@@ -519,7 +485,7 @@ result := 1.U << sel
 
 ### 编码器
 
-为了表达更大的编码器，我们需要编写一个硬件生成器（hardware generator）。
+为了描述更大的编码器，我们需要编写一个硬件生成器（hardware generator）。
 因此，我们需要引入 Scala 循环结构。
 
 ```scala
@@ -533,7 +499,7 @@ result := 1.U << sel
  val encOut = v(15)
 ```
 
-编码器的输入是 `hotIn`，输出是 `encOut`。`Vec` 元素 `0` 是默认情况 (0)，也表示 `hotIn` 中最低有效位 (LSB) 为 1 时的输出值。
+编码器的输入是 `hotIn`，输出是 `encOut`。`Vec` 元素 `0` 是默认值（0），也表示 `hotIn` 中最低有效位 (LSB) 为 1 时的输出值。
 
 如果 `hotIn` 中位置 `i` 处 bit 值为 1，则多选器输出为该索引 `i`，否则为 0。
 最后，我们需要合并所有向量元素以获得单个输出。
@@ -572,13 +538,13 @@ notGranted(i) := !grant(i) && notGranted(i-1)
 }
 ```
 
-使用循环与手写版本的差别是，我们为最后一个请求（n-1）生成了 `notGranted` 信号。
+使用循环与手写版本的差别是，我们为最后一个请求信号（n-1）生成了 `notGranted` 信号。
 该信号未被使用，因此综合工具会将其优化掉。
 
 ### 优先编码器
 
-在我们最初的编码器设计中，我们必须假设输入是单热编码（one-hot encoded）的，这意味着只允许一位为 1。
-多个位都置位的输入是非法的，会导致未定义的行为。
+在我们最初的编码器设计中，我们假设输入是单热编码（one-hot encoded）的，这意味着只允许一位为 1。
+多个位都是1的输入是非法的，会导致未定义的行为。
 
 我们可以通过将编码器与仲裁电路相结合来解决这个问题，仲裁电路仅选择最高优先级的位。
 

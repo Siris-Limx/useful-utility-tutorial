@@ -468,6 +468,75 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      组合逻辑基本模块
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="组合逻辑基本模块">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      组合逻辑电路
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      解码器
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      编码器
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      仲裁器
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      优先编码器
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      比较器
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -776,6 +845,75 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      组合逻辑基本模块
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="组合逻辑基本模块">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      组合逻辑电路
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      解码器
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      编码器
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      仲裁器
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      优先编码器
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      比较器
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -814,7 +952,7 @@ SInt (10.W)     // 10-bit signed integer
 
 &quot;hff&quot;.U             // hexadecimal representation of 255
 &quot;o377&quot;.U            // octal representation of 255
-&quot; b1111_1111 &quot;.U    // binary representation of 255, the underscore is ignored
+&quot; b1111_1111&quot;.U    // binary representation of 255, the underscore is ignored
 </code></pre>
 <p>！！！注意：定义宽度时不能遗漏 <code>.W</code>。 <code>1.U(32)</code> 不会定义表示 1 的 32 位宽常量。相反，表达式 (32) 被解释为第32位，这会导致结果是 0。</p>
 <p>Chisel 会自动推断常量的宽度，如果没有指定位宽，那么 Chisel 会默认使用能表示该常数的最小位宽。
@@ -839,7 +977,7 @@ w := a &amp; b
 </code></pre>
 <p>数据的截取、拼接、扩展等操作如下：</p>
 <pre><code class="language-scala">val sign = x(31)                    // sign bit of x
-val lowByte = largeWord (7, 0)      // low byte of largeWord
+val lowByte = largeWord(7, 0)      // low byte of largeWord
 val word = highByte ## lowByte      // concatenation, the same as Cat(highByte, lowByte)
 </code></pre>
 <p>Chisel 提供了多选器的抽象：</p>
@@ -860,7 +998,7 @@ val q = reg                     // the output of the register can be used just w
 <pre><code class="language-scala">val bothReg = RegNext(d, 0.U)   // register with next value of d, initialized with 0
 </code></pre>
 <p>下面是一个计数器实例：</p>
-<pre><code class="language-scala">val cntReg = RegInit (0.U(8.W))
+<pre><code class="language-scala">val cntReg = RegInit(0.U(8.W))
 cntReg := Mux(cntReg === 9.U, 0.U, cntReg + 1.U)
 </code></pre>
 <h3 id="bundle-vec">Bundle 和 Vec 结构</h3>
@@ -889,7 +1027,7 @@ val channel = ch    // A bundle can be referenced as a whole
 <h5 id="combinational-vec">Combinational Vec</h5>
 <p><code>Vec</code> 是通过调用带有两个参数的构造函数来创建的：元素的数量和元素的类型。Combinational Vec 需要封装成 <code>Wire</code>。
 通过使用索引访问各个元素，封装在 <code>Wire</code> 中的 <code>Vec</code> 只是一个多路复用器（multiplexer）。</p>
-<pre><code class="language-scala">val v = Wire(Vec(3, UInt (4.W)))
+<pre><code class="language-scala">val v = Wire(Vec(3, UInt(4.W)))
 
 v(0) := 1.U
 v(1) := 3.U
@@ -904,7 +1042,7 @@ val defVecSig = VecInit(d, e, f)
 </code></pre>
 <h5 id="register-vec">Register Vec</h5>
 <p>我们可以使用 <code>Vec</code> 来定义寄存器数组。</p>
-<pre><code class="language-scala">val registerFile = Reg(Vec (32, UInt (32.W)))
+<pre><code class="language-scala">val registerFile = Reg(Vec (32, UInt(32.W)))
 registerFile(index) := dIn
 val dOut = registerFile(index)
 </code></pre>
@@ -921,7 +1059,7 @@ initReg (2) := f
 <code>Seq</code> 包含一个创建函数 <code>fill</code>，用于用相同的值初始化序列。
 <code>VecInit</code> 可以使用包含 Chisel 类型的 <code>Seq</code> 来构造。</p>
 <pre><code class="language-scala">val resetRegFile =
-    RegInit(VecInit(Seq.fill (32) (0.U(32.W))))   // 32-bit register file, initialized with 0
+    RegInit(VecInit(Seq.fill(32) (0.U(32.W))))   // 32-bit register file, initialized with 0
 val rdRegFile = resetRegFile(sel)
 </code></pre>
 <h4 id="bundle-vec_1">Bundle 和 Vec 结合</h4>
@@ -933,7 +1071,7 @@ val vector = Vec(4, UInt(8.W))
 }
 </code></pre>
 <p>当我们想要一个有复位值的 <code>Bundle</code> 类型的寄存器时，我们首先创建该 <code>Bundle</code> 的 <code>Wire</code>，根据需要设置各个字段，然后将此 <code>Bundle</code> 传递给 <code>RegInit</code>。</p>
-<pre><code class="language-scala">val initVal    = Wire(new Channel ())
+<pre><code class="language-scala">val initVal    = Wire(new Channel())
 initVal.data  := 0.U
 initVal.valid := false.B
 val channelReg = RegInit(initVal)
@@ -1000,8 +1138,8 @@ class Adder extends Module {
 
 class Register extends Module {
     val io = IO(new Bundle {
-        val d = Input(UInt (8.W))
-        val q = Output(UInt (8.W))
+        val d = Input(UInt(8.W))
+        val q = Output(UInt(8.W))
     })
 
     val reg = RegInit (0.U)
@@ -1081,8 +1219,8 @@ class Decode extends Module {
     // ... Implementation of decode
 }
 
-val fetch = Module(new Fetch ())
-val decode = Module(new Decode ())
+val fetch = Module(new Fetch())
+val decode = Module(new Decode())
 
 fetch.io &lt;&gt; decode.io
 </code></pre>
@@ -1100,7 +1238,7 @@ fetch.io &lt;&gt; decode.io
     })
 }
 </code></pre>
-<p>上述代码中的 <code>Map("SIM_DEVICE" -&gt; "7SERIES")</code> 生成的 Verilog 代码为 <code>parameter SIM_DEVICE = "7SERIES"</code>。</p>
+<p>上述代码中 <code>Map("SIM_DEVICE" -&gt; "7SERIES")</code> 生成的 Verilog 代码为 <code>parameter SIM_DEVICE = "7SERIES"</code>。</p>
 <h4 id="extmodule">ExtModule</h4>
 <p><code>ExtModules</code> 充当占位符，其生成的 Verilog 代码是模块的实例化（不会生成模块的定义）。
 一个常见的例子是使用 <code>ExtModule</code> 来表示 FPGA 上的 IP。</p>
@@ -1115,11 +1253,109 @@ fetch.io &lt;&gt; decode.io
 
 class PathBlackBoxAdder extends HasBlackBoxPath {
     val io = IO(new BlackBoxAdderIO)
-    addPath(&quot;./src/main/resources/ PathBlackBoxAdder.v&quot;)
+    addPath(&quot;./src/main/resources/PathBlackBoxAdder.v&quot;)
 }
 </code></pre>
 <p>上述代码中的 <code>addPath</code> 函数指定了 Verilog 模块的路径。</p>
 <p>注意，<code>HasBlackBoxPath</code> 是 <code>BlackBox</code> 类的特征（trait），这意味着 <code>class Example extends BlackBox with HasBlackBoxInline</code> 等价于 <code>class Example extends HasBlackBoxInline</code>.</p>
+<h2 id="_8">组合逻辑基本模块</h2>
+<h3 id="_9">组合逻辑电路</h3>
+<p>最简单的组合逻辑形式是布尔表达式，可以为其指定一个名称：</p>
+<pre><code class="language-scala">    val e = (a &amp; b) | c
+</code></pre>
+<p>该表达式可以在其他表达式中重用：</p>
+<pre><code class="language-scala">    val f = ~e
+</code></pre>
+<p>这样组合逻辑的表达式被认为是常量（根本原因是使用了 Scala 的 <code>val</code>）。
+使用 <code>=</code> 给 e 赋值会导致 Scala 编译器错误：<code>reassignment to val</code>。
+尝试使用Chisel运算符 <code>:=</code> 会导致错误：<code>Cannot reassign to read-only.</code>。</p>
+<p>但是，当我们对组合电路进行条件更新（conditional update）时，我们可以对同一变量进行多次赋值。</p>
+<pre><code class="language-scala">val w = WireDefault(0.U)
+
+ when (cond) {
+    w := 1.U
+ } .elsewhen (cond2) {
+    w := 2.U
+ } .otherwise {
+    w := 3.U
+ }
+</code></pre>
+<p>注意 <code>.elsewhen</code> 中的 <code>.</code> 不能忽略。</p>
+<h3 id="_10">解码器</h3>
+<p>我们可以用真值表来描述解码器的功能。
+Chisel 中的 <code>switch</code> 语句用来将逻辑描述为真值表。
+要使用 <code>switch</code> 语句，我们需要导入一个Chisel包：<code>import chisel3.util._</code>。</p>
+<pre><code class="language-scala">import chisel3.util._
+
+result := 0.U
+
+switch(sel) {
+    is (0.U) { result := 1.U}
+    is (1.U) { result := 2.U}
+    is (2.U) { result := 4.U}
+    is (3.U) { result := 8.U}
+}
+</code></pre>
+<p>注意，即使我们枚举所有可能的输入值，Chisel 仍然需要我们指定一个默认值。
+该默认值永远不会被使用，因此会被综合工具优化掉。
+这种做法的目的是避免组合电路生成锁存器。</p>
+<p>我们也可以用 Chisel 移位操作 <code>&lt;&lt;</code> 来表示解码器。</p>
+<pre><code class="language-scala">result := 1.U &lt;&lt; sel
+</code></pre>
+<h3 id="_11">编码器</h3>
+<p>为了表达更大的编码器，我们需要编写一个硬件生成器（hardware generator）。
+因此，我们需要引入 Scala 循环结构。</p>
+<pre><code class="language-scala"> val v = Wire(Vec(16, UInt(4.W)))
+ v(0) := 0.U
+
+ // Loops i from 0 to 15
+ for (i &lt;- 1 until 16) {
+    v(i) := Mux(hotIn(i), i.U, 0.U) | v(i-1)
+ }
+ val encOut = v(15)
+</code></pre>
+<p>编码器的输入是 <code>hotIn</code>，输出是 <code>encOut</code>。<code>Vec</code> 元素 <code>0</code> 是默认情况 (0)，也表示 <code>hotIn</code> 中最低有效位 (LSB) 为 1 时的输出值。</p>
+<p>如果 <code>hotIn</code> 中位置 <code>i</code> 处 bit 值为 1，则多选器输出为该索引 <code>i</code>，否则为 0。
+最后，我们需要合并所有向量元素以获得单个输出。
+由于当输入中对应位为 0 时向量元素为 0，因此我们可以简单地使用 OR 函数将所有元素组合起来。
+我们称这个操作为归约（reduce）。
+这里我们执行 OR 归约 （OR reduction）。</p>
+<h3 id="_12">仲裁器</h3>
+<p>我们实现一个 3-bit 的仲裁器。
+它由 3 条请求信号（r0-r2）和 3 条许可信号（g0-g2）组成。
+仲裁器每次只会响应一个请求信号，并优先选择编号较小的请求信号。</p>
+<pre><code class="language-scala">val grant = VecInit(false.B, false.B, false.B)
+val notGranted = VecInit(false.B, false.B)
+
+grant(0) := request(0)
+notGranted(0) := !grant(0)
+grant(1) := request(1) &amp;&amp; notGranted(0)
+notGranted(1) := !grant(1) &amp;&amp; notGranted(0)
+grant(2) := request(2) &amp;&amp; notGranted(1)
+</code></pre>
+<p>对于更大的仲裁器，我们需要使用循环结构。</p>
+<pre><code class="language-scala">val grant = VecInit.fill(n)(false.B)
+val notGranted = VecInit.fill(n)(false.B)
+
+grant(0) := request(0)
+notGranted(0) := !grant(0)
+for (i &lt;- 1 until n) {
+grant(i) := request(i) &amp;&amp; notGranted(i-1)
+notGranted(i) := !grant(i) &amp;&amp; notGranted(i-1)
+}
+</code></pre>
+<p>使用循环与手写版本的差别是，我们为最后一个请求（n-1）生成了 <code>notGranted</code> 信号。
+该信号未被使用，因此综合工具会将其优化掉。</p>
+<h3 id="_13">优先编码器</h3>
+<p>在我们最初的编码器设计中，我们必须假设输入是单热编码（one-hot encoded）的，这意味着只允许一位为 1。
+多个位都置位的输入是非法的，会导致未定义的行为。</p>
+<p>我们可以通过将编码器与仲裁电路相结合来解决这个问题，仲裁电路仅选择最高优先级的位。</p>
+<h3 id="_14">比较器</h3>
+<p>比较只需要一行代码就可以完成。
+因此，比较函数通常直接在其他模块中使用，而不是封装成一个单独的模块。</p>
+<pre><code class="language-scala">val equ = a === b
+val gt = a &gt; b
+</code></pre>
 
 
 
