@@ -1,17 +1,10 @@
-# Welcome to MkDocs
+# 欢迎来到使用工具入门教程！
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+本教程的目的是帮助你快速了解芯片设计流程中一些常见的工具。
 
-## Commands
+## 目录
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
-
-## Project layout
-
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+- [Chisel](Chisel.md)
+- [Makefile](Makefile.md)
+- [Verilator](Verilator.md)
+- [GDB](GDB.md)

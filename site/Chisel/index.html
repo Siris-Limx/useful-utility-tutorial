@@ -1,0 +1,1176 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="..">
+      
+      
+        <link rel="next" href="../GDB/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.5">
+    
+    
+      
+        <title>Chisel - Useful Utility Tutorial</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.50c56a3b.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Useful Utility Tutorial" class="md-header__button md-logo" aria-label="Useful Utility Tutorial" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Useful Utility Tutorial
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Chisel
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Useful Utility Tutorial" class="md-nav__button md-logo" aria-label="Useful Utility Tutorial" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Useful Utility Tutorial
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    欢迎来到使用工具入门教程！
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Chisel
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Chisel
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      介绍
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      基本组成
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="基本组成">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      数据类型
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      组合逻辑
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      寄存器
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bundle-vec" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bundle 和 Vec 结构
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bundle 和 Vec 结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bundle" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bundle
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vec" class="md-nav__link">
+    <span class="md-ellipsis">
+      Vec
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Vec">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#combinational-vec" class="md-nav__link">
+    <span class="md-ellipsis">
+      Combinational Vec
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#register-vec" class="md-nav__link">
+    <span class="md-ellipsis">
+      Register Vec
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bundle-vec_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bundle 和 Vec 结合
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wire-reg-io" class="md-nav__link">
+    <span class="md-ellipsis">
+      Wire, Reg 和 IO
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      模块
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="模块">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#module" class="md-nav__link">
+    <span class="md-ellipsis">
+      Module 类
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      实用功能
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="实用功能">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#switch" class="md-nav__link">
+    <span class="md-ellipsis">
+      switch
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bulk-connections" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bulk Connections
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chisel" class="md-nav__link">
+    <span class="md-ellipsis">
+      内嵌非 Chisel 代码
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="内嵌非 Chisel 代码">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#extmodule" class="md-nav__link">
+    <span class="md-ellipsis">
+      ExtModule
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#blackbox" class="md-nav__link">
+    <span class="md-ellipsis">
+      BlackBox
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GDB/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GDB
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Makefile/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Makefile
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Verilator/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Verilator
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      介绍
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      基本组成
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="基本组成">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      数据类型
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      组合逻辑
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      寄存器
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bundle-vec" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bundle 和 Vec 结构
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bundle 和 Vec 结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bundle" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bundle
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vec" class="md-nav__link">
+    <span class="md-ellipsis">
+      Vec
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Vec">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#combinational-vec" class="md-nav__link">
+    <span class="md-ellipsis">
+      Combinational Vec
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#register-vec" class="md-nav__link">
+    <span class="md-ellipsis">
+      Register Vec
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bundle-vec_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bundle 和 Vec 结合
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wire-reg-io" class="md-nav__link">
+    <span class="md-ellipsis">
+      Wire, Reg 和 IO
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      模块
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="模块">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#module" class="md-nav__link">
+    <span class="md-ellipsis">
+      Module 类
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      实用功能
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="实用功能">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#switch" class="md-nav__link">
+    <span class="md-ellipsis">
+      switch
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bulk-connections" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bulk Connections
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chisel" class="md-nav__link">
+    <span class="md-ellipsis">
+      内嵌非 Chisel 代码
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="内嵌非 Chisel 代码">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#extmodule" class="md-nav__link">
+    <span class="md-ellipsis">
+      ExtModule
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#blackbox" class="md-nav__link">
+    <span class="md-ellipsis">
+      BlackBox
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  <h1>Chisel</h1>
+
+<h2 id="_1">介绍</h2>
+<p>Chisel是一个<strong>硬件构建语言</strong>（Hardware Construct Language），它是Scala的一个库。Chisel的设计目标是利用Scala的强大特性，同时又能够生成高效的硬件描述。Chisel的设计思想是将硬件描述看作是一个函数式的数据结构，这样可以利用Scala的函数式特性来描述硬件。</p>
+<h2 id="_2">基本组成</h2>
+<h3 id="_3">数据类型</h3>
+<p>Chisel 有三种数据结构：<code>Bits</code>，<code>UInt</code> 和 <code>SInt</code>。
+这三种数据结构都表示一个比特向量（vector of bits）。
+<code>Bits</code> 是一个抽象类，<code>UInt</code> 和 <code>SInt</code> 是 <code>Bits</code> 的子类。
+一般而言，我们不会使用 <code>Bits</code>。</p>
+<pre><code class="language-scala">Bits (8.W)      // 8-bit vector of bits
+UInt (8.W)      // 8-bit unsigned integer
+SInt (10.W)     // 10-bit signed integer
+</code></pre>
+<p>Chisel 使用 <code>Width</code> 类型来表示比特向量的长度。
+<code>n.W</code> 将 Scala 整数 <code>n</code> 转换为 Chisel 的 <code>Width</code> 类型。</p>
+<p>如下是一些数据类型实例：</p>
+<pre><code class="language-scala">0.U                 // defines a UInt constant of 0
+-3.S                // defines a SInt constant of -3
+3.U(4.W)            // An 4-bit constant of 3
+
+&quot;hff&quot;.U             // hexadecimal representation of 255
+&quot;o377&quot;.U            // octal representation of 255
+&quot; b1111_1111 &quot;.U    // binary representation of 255, the underscore is ignored
+</code></pre>
+<p>！！！注意：定义宽度时不能遗漏 <code>.W</code>。 <code>1.U(32)</code> 不会定义表示 1 的 32 位宽常量。相反，表达式 (32) 被解释为第32位，这会导致结果是 0。</p>
+<p>Chisel 会自动推断常量的宽度，如果没有指定位宽，那么 Chisel 会默认使用能表示该常数的最小位宽。
+例如，<code>3.U</code> 会被推断为 <code>3.U(2.W)</code>，因为 3 可以用 2 位表示。
+尽管 Chisel 会推断信号和寄存器所需的位宽，但在创建硬件对象时指定预期的位宽度是一个很好的习惯。</p>
+<p>为了表示逻辑值，Chisel 定义了 <code>Bool</code> 类型。
+以下代码将 Scala 布尔常量 true 和 false 转换为 Chisel <code>Bool</code> 常量。</p>
+<pre><code class="language-scala">true.B
+false.B
+</code></pre>
+<h3 id="_4">组合逻辑</h3>
+<p><img alt="operator" src="../img/operator.png" />
+<img alt="operator2" src="../img/operator2.png" /></p>
+<pre><code class="language-scala">val logic = (a &amp; b) | c
+</code></pre>
+<p>该电路可以用于向量，而不仅仅是与 AND 和 OR 电路组合的 Wire。</p>
+<p>运算的结果宽度是加法和减法运算符的最大宽度、乘法的两个宽度之和，通常是除法和模运算的分子宽度。</p>
+<p>信号也可以首先定义为某种类型的 <code>Wire</code>。
+之后，我们可以使用 <code>:=</code> 更新运算符（update operator）赋值。</p>
+<pre><code class="language-scala">val w = Wire(UInt())
+w := a &amp; b
+</code></pre>
+<p>数据的截取、拼接、扩展等操作如下：</p>
+<pre><code class="language-scala">val sign = x(31)                    // sign bit of x
+val lowByte = largeWord (7, 0)      // low byte of largeWord
+val word = highByte ## lowByte      // concatenation, the same as Cat(highByte, lowByte)
+</code></pre>
+<p>Chisel 提供了多选器的抽象：</p>
+<pre><code class="language-scala">val result = Mux(sel, a, b)
+</code></pre>
+<p>当 <code>sel</code>为 <code>true.B</code> 时选择 a，否则选择b。<code>sel</code> 的类型是 Chisel <code>Bool</code>；输入 a 和 b 可以是任何 Chisel 基本类型或聚合（束或向量）（aggregate such as bundles and vectors），只要它们是相同类型即可。</p>
+<h3 id="_5">寄存器</h3>
+<p>Chisel 中的寄存器<strong>隐式连接</strong>到全局时钟并在上升沿更新
+当在寄存器声明中提供初始化值时，它使用连接到全局复位信号的<strong>同步复位</strong>。</p>
+<pre><code class="language-scala">val reg = RegInit(0.U(8.W))    // 8-bit register, initialized with 0 at reset
+reg := d                        // connect an input to the register
+val q = reg                     // the output of the register can be used just with the name in an expression
+</code></pre>
+<p>也可以在定义寄存器的时候指定其输入：</p>
+<pre><code class="language-scala">val nextReg = RegNext(d)        // register with next value of d
+</code></pre>
+<p>同时指定初始值和输入：</p>
+<pre><code class="language-scala">val bothReg = RegNext(d, 0.U)   // register with next value of d, initialized with 0
+</code></pre>
+<p>下面是一个计数器实例：</p>
+<pre><code class="language-scala">val cntReg = RegInit (0.U(8.W))
+cntReg := Mux(cntReg === 9.U, 0.U, cntReg + 1.U)
+</code></pre>
+<h3 id="bundle-vec">Bundle 和 Vec 结构</h3>
+<p>Chisel 提供了两种聚合（aggregate）数据结构来组织多个信号：<code>Bundle</code> 和 <code>Vec</code>。
+<code>Bundle</code> 将不同类型的信号分组为命名字段。
+<code>Vec</code> 表示相同类型的信号（元素）的可索引集合。</p>
+<h4 id="bundle">Bundle</h4>
+<p>我们可以定义一个 <code>Bundle</code> 类的继承，并将字段列为构造函数块中的 val。
+要使用 bundle，我们使用 <code>new</code> 创建它并将其封装到 <code>Wire</code> 中。
+使用<code>.</code>符号访问这些字段。</p>
+<pre><code class="language-scala">class Channel() extends Bundle {
+    val data     = UInt(32.W)
+    val valid    = Bool()
+}
+
+val ch    = Wire(new Channel())
+ch.data  := 3.U
+ch.valid := true.B
+
+val b     = ch.valid
+
+val channel = ch    // A bundle can be referenced as a whole
+</code></pre>
+<p>点表示法（dot notation）在面向对象语言中很常见，其中 <code>x.y</code> 表示 <code>x</code> 是对象的引用，<code>y</code> 是该对象的字段。</p>
+<h4 id="vec">Vec</h4>
+<h5 id="combinational-vec">Combinational Vec</h5>
+<p><code>Vec</code> 是通过调用带有两个参数的构造函数来创建的：元素的数量和元素的类型。Combinational Vec 需要封装成 <code>Wire</code>。
+通过使用索引访问各个元素，封装在 <code>Wire</code> 中的 <code>Vec</code> 只是一个多路复用器（multiplexer）。</p>
+<pre><code class="language-scala">val v = Wire(Vec(3, UInt (4.W)))
+
+v(0) := 1.U
+v(1) := 3.U
+v(2) := 5.U
+
+val index = 1.U(2.W)
+val a = v(index)
+</code></pre>
+<p>我们可以使用 <code>VecInit</code> 设置 <code>Vec</code> 的默认值。</p>
+<pre><code class="language-scala">val defVec = VecInit (1.U(3.W), 2.U, 3.U)
+val defVecSig = VecInit(d, e, f)
+</code></pre>
+<h5 id="register-vec">Register Vec</h5>
+<p>我们可以使用 <code>Vec</code> 来定义寄存器数组。</p>
+<pre><code class="language-scala">val registerFile = Reg(Vec (32, UInt (32.W)))
+registerFile(index) := dIn
+val dOut = registerFile(index)
+</code></pre>
+<p>向量寄存器也可以被初始化。
+初始化的值这就是寄存器复位的值。
+为了初始化寄存器文件，我们使用带有初始值的 <code>VecInit</code>，并将其封装到 <code>RegInit</code> 中。</p>
+<pre><code class="language-scala">val initReg = RegInit(VecInit (0.U(3.W), 1.U, 2.U))
+val resetVal = initReg(sel)
+initReg (0) := d
+initReg (1) := e
+initReg (2) := f
+</code></pre>
+<p>如果我们想将一个寄存器文件的所有元素重置为相同的值（可能是 0），我们可以使用 Scala 序列 <code>Seq</code>。
+<code>Seq</code> 包含一个创建函数 <code>fill</code>，用于用相同的值初始化序列。
+<code>VecInit</code> 可以使用包含 Chisel 类型的 <code>Seq</code> 来构造。</p>
+<pre><code class="language-scala">val resetRegFile =
+    RegInit(VecInit(Seq.fill (32) (0.U(32.W))))   // 32-bit register file, initialized with 0
+val rdRegFile = resetRegFile(sel)
+</code></pre>
+<h4 id="bundle-vec_1">Bundle 和 Vec 结合</h4>
+<pre><code class="language-scala">val vecBundle = Wire(Vec(8, new Channel()))
+
+class BundleVec extends Bundle {
+val field  = UInt(8.W)
+val vector = Vec(4, UInt(8.W))
+}
+</code></pre>
+<p>当我们想要一个有复位值的 <code>Bundle</code> 类型的寄存器时，我们首先创建该 <code>Bundle</code> 的 <code>Wire</code>，根据需要设置各个字段，然后将此 <code>Bundle</code> 传递给 <code>RegInit</code>。</p>
+<pre><code class="language-scala">val initVal    = Wire(new Channel ())
+initVal.data  := 0.U
+initVal.valid := false.B
+val channelReg = RegInit(initVal)
+</code></pre>
+<p>！！！注意，部分赋值在 Chisel 中是不允许的。</p>
+<pre><code class="language-scala">val assignWord      = Wire(UInt(16.W))
+assignWord (7, 0)  := lowByte           // WRONG!!!
+assignWord (15, 8) := highByte          // WRONG!!!
+</code></pre>
+<p>在这种情况下，应该使用 <code>Bundle</code> 类型。</p>
+<pre><code class="language-scala">val assignWord = Wire(UInt(16.W))
+
+class Split extends Bundle {
+val high = UInt (8.W)
+val low = UInt (8.W)
+}
+
+val split   = Wire(new Split())
+split.low  := lowByte
+split.high := highByte
+assignWord := split.asUInt()    // casting that bundle with asUInt() to a UInt
+</code></pre>
+<p>该解决方案的一个缺点是需要知道 <code>Bundle</code> 字段以何种顺序合并到单个向量。</p>
+<h3 id="wire-reg-io">Wire, Reg 和 IO</h3>
+<p><code>UInt</code>、<code>SInt</code> 和 <code>Bits</code> 是 Chisel 类型，它们本身并不代表硬件。
+将它们封装到 <code>Wire</code>、<code>Reg</code> 或 <code>IO</code> 中才能生成硬件。
+<code>Wire</code> 代表组合逻辑，<code>Reg</code> 代表寄存器（D 触发器的集合），<code>IO</code> 代表模块的连接（电路的引脚）。
+任何 Chisel 类型都可以封装在 <code>Wire</code>、<code>Reg</code> 或 <code>IO</code> 中。</p>
+<p>你可以通过 Scala 不可变变量来创建一个硬件。
+使用 Chisel 运算符 <code>:=</code> 将值或表达式分配（或重新分配）到 <code>Wire</code>、<code>Reg</code> 或 <code>IO</code>。</p>
+<pre><code class="language-scala">val number = Wire(UInt())
+val reg    = Reg(SInt())
+
+number    := 10.U
+reg       := value - 3.U
+</code></pre>
+<p>请注意 Scala 赋值运算符 “=” 和 Chisel 运算符 “:=” 之间的细微差别。
+创建硬件对象（并为其命名）时使用 Scala 的 “=” 运算符，但在为现有硬件对象分配或重新分配值时使用 Chisel 的 “:=” 运算符。</p>
+<p>在组合分支逻辑中，可以根据条件分配组合值，但需要在条件的每个分支中分配它们，否则会描述一个锁存器，Chisel 编译器会报错。
+最好的办法是在创建 <code>Wire</code> 时定义默认值。</p>
+<pre><code class="language-scala">val number = WireDefault (10.U(4.W))
+</code></pre>
+<h2 id="_6">模块</h2>
+<h3 id="module">Module 类</h3>
+<p>硬件组件（hardware components）在 Chisel 中称为模块（module）。
+每个模块都继承自类 <code>Module</code> 并用 <code>io</code> 字段表示接口。
+接口由 <code>Bundle</code> 定义，并被封装在 <code>IO()</code> 中。
+<code>Bundle</code> 中包含表示模块输入和输出端口的字段。
+通过将字段封装到 <code>Input()</code> 或 <code>Output()</code> 中来定义方向。
+方向是从模块本身的角度来看的。</p>
+<pre><code class="language-scala">// an adder
+
+class Adder extends Module {
+    val io = IO(new Bundle {
+        val a = Input(UInt(4.W))
+        val b = Input(UInt(4.W))
+        val sum = Output(UInt(4.W))
+    })
+
+    io.sum := io.a + io.b
+}
+
+// a register
+
+class Register extends Module {
+    val io = IO(new Bundle {
+        val d = Input(UInt (8.W))
+        val q = Output(UInt (8.W))
+    })
+
+    val reg = RegInit (0.U)
+    reg := io.d
+    io.q := reg
+}
+</code></pre>
+<p>由上述加法器和寄存器模块组成的计数器定义如下：</p>
+<pre><code class="language-scala">class Count10 extends Module {
+    val io = IO(new Bundle {
+        val dout = Output(UInt(8.W))
+    })
+
+    val add = Module(new Adder())
+    val reg = Module(new Register())
+
+    // the register output
+    val count = reg.io.q
+
+    // connect the adder
+    add.io.a := 1.U
+    add.io.b := count
+    val result = add.io.y
+
+    // connect the Mux and the register input
+    val next = Mux(count === 9.U, 0.U, result)
+    reg.io.d := next
+
+    io.dout := count
+}
+</code></pre>
+<p>通过使用 <code>new</code> 来实例化模块，并将它封装到 <code>Module()</code> 中。</p>
+<h3 id="_7">实用功能</h3>
+<h4 id="switch">switch</h4>
+<p><code>switch</code> 函数是一个多路选择器，它的行为类似于 <code>switch</code> 语句。</p>
+<pre><code class="language-scala">class Alu extends Module {
+    val io = IO(new Bundle {
+        val a = Input(UInt(16.W))
+        val b = Input(UInt(16.W))
+        val fn = Input(UInt(2.W))
+        val y = Output(UInt(16.W))
+    })
+
+    // some default value is needed
+    io.y := 0.U
+
+    // The ALU selection
+    switch(io.fn) {
+    is(0.U) { io.y := io.a + io.b }
+    is(1.U) { io.y := io.a - io.b }
+    is(2.U) { io.y := io.a | io.b }
+    is(3.U) { io.y := io.a &amp; io.b }
+    }
+}
+</code></pre>
+<p>要使用这个功能，我们需要导入一个Chisel包：<code>import chisel3.util._</code></p>
+<h4 id="bulk-connections">Bulk Connections</h4>
+<p>为了连接具有多个 IO 端口的模块，Chisel 提供了批量连接运算符 <code>&lt;&gt;</code>。
+Chisel 会将 <code>io</code> 字段中名称相同的端口连接起来。
+如果没有匹配的名称，那么该端口会悬空。</p>
+<pre><code class="language-scala">class Fetch extends Module {
+    val io = IO(new Bundle {
+        val instr = Output(UInt(32.W))
+        val pc = Output(UInt(32.W))
+    })
+    // ... Implementation of fetch
+}
+
+class Decode extends Module {
+    val io = IO(new Bundle {
+        val instr = Input(UInt(32.W))
+        val pc = Input(UInt(32.W))
+        val aluOp = Output(UInt(5.W))
+        val regA = Output(UInt(32.W))
+        val regB = Output(UInt(32.W))
+    })
+    // ... Implementation of decode
+}
+
+val fetch = Module(new Fetch ())
+val decode = Module(new Decode ())
+
+fetch.io &lt;&gt; decode.io
+</code></pre>
+<p>我们也可以将子模块的端口与父模块连接。</p>
+<pre><code class="language-scala">io &lt;&gt; execute.io
+</code></pre>
+<h3 id="chisel">内嵌非 Chisel 代码</h3>
+<p>Verilog 描述的模块可以通过 <code>ExtModule</code> 和 <code>BlackBox</code> 类内嵌在 Chisel 中。</p>
+<p>两者都可以在定义的时候使用 <code>Map[String, Param]</code> ，它们在生成的 Verilog 代码中表示模块的参数。</p>
+<pre><code class="language-scala">class BUFGCE extends BlackBox(Map(&quot;SIM_DEVICE&quot; -&gt; &quot;7SERIES&quot;)) {
+    val io = IO(new Bundle {
+        val I = Input(Clock())
+        val CE = Input(Bool())
+        val O = Output(Clock())
+    })
+}
+</code></pre>
+<p>上述代码中的 <code>Map("SIM_DEVICE" -&gt; "7SERIES")</code> 生成的 Verilog 代码为 <code>parameter SIM_DEVICE = "7SERIES"</code>。</p>
+<h4 id="extmodule">ExtModule</h4>
+<p><code>ExtModules</code> 充当占位符，其生成的 Verilog 代码是模块的实例化（不会生成模块的定义）。
+一个常见的例子是使用 <code>ExtModule</code> 来表示 FPGA 上的 IP。</p>
+<h4 id="blackbox">BlackBox</h4>
+<pre><code class="language-scala">class BlackBoxAdderIO extends Bundle {
+    val a = Input(UInt(32.W))
+    val b = Input(UInt(32.W))
+    val cin = Input(Bool())
+    val c = Output(UInt(32.W))
+    val cout = Output(Bool())
+}
+
+class PathBlackBoxAdder extends HasBlackBoxPath {
+    val io = IO(new BlackBoxAdderIO)
+    addPath(&quot;./src/main/resources/ PathBlackBoxAdder.v&quot;)
+}
+</code></pre>
+<p>上述代码中的 <code>addPath</code> 函数指定了 Verilog 模块的路径。</p>
+<p>注意，<code>HasBlackBoxPath</code> 是 <code>BlackBox</code> 类的特征（trait），这意味着 <code>class Example extends BlackBox with HasBlackBoxInline</code> 等价于 <code>class Example extends HasBlackBoxInline</code>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.c18c5fb9.min.js"></script>
+      
+    
+  </body>
+</html>
