@@ -7,7 +7,8 @@ Chisel 教程各个章节的内容如下：
 - [基本组成](#基本组成)：基本的数据类型、组合逻辑、寄存器、Bundle 和 Vec 结构、Wire, Reg 和 IO。
 - [模块](#模块)：介绍 Module 类。
 - [组合逻辑基本模块](#组合逻辑基本模块)：一些简单的组合逻辑模块的实例。
-- []()：未完待续。
+- [时序逻辑基本模块](#时序逻辑基本模块)：一些简单的时序逻辑模块的实例。
+- 未完待续。
 
 ## 基本组成
 
@@ -98,12 +99,13 @@ val nextReg = RegNext(d)        // register with next value of d
 val bothReg = RegNext(d, 0.U)   // register with next value of d, initialized with 0
 ```
 
-下面是一个计数器实例：
+具有使能信号的寄存器也很常见，Chisel 的定义如下：
 
 ```scala
-val cntReg = RegInit(0.U(8.W))
-cntReg := Mux(cntReg === 9.U, 0.U, cntReg + 1.U)
+val resetEnableReg = RegEnable (inVal , 0.U(4.W), enable)
 ```
+
+第一个参数是输入信号，第二个参数是初始化值，第三个参数是使能信号。
 
 > 有关 `Mux` 的介绍，请参考[多选器](#多选器)。
 
@@ -562,6 +564,162 @@ notGranted(i) := !grant(i) && notGranted(i-1)
 
 ```scala
 val equ = a === b
-val gt = a > b
+val gt  = a > b
 ```
 
+## 时序逻辑基本模块
+
+### 计数器
+
+```scala
+val cntReg = RegInit(0.U(8.W))
+cntReg := Mux(cntReg === 9.U, 0.U, cntReg + 1.U)
+```
+
+也可以用 `when` 来实现：
+
+```scala
+val cntReg = RegInit (0.U(8.W))
+
+cntReg := cntReg + 1.U
+when(cntReg === N) {
+	cntReg := 0.U
+}
+```
+
+如果我们需要很多不同的计数器，我们可以先定义一个带有参数的函数，然后调用该函数来创建计数器。
+
+```scala
+// This function returns a counter
+def genCounter (n: Int) = {
+	val cntReg = RegInit(0.U(8.W))
+	cntReg := Mux(cntReg === n.U, 0.U, cntReg + 1.U)
+	cntReg	// the return value of the function
+}
+// now we can easily create many counters
+val count10 = genCounter(10)
+val count99 = genCounter(99)
+```
+
+### 计时器
+
+数字定时器首先设定倒计时时长，然后倒计时直到为零。
+计时器为零时置位完成信号。
+
+```scala
+val cntReg = RegInit(0.U(8.W))
+val done   = cntReg === 0.U
+val next   = WireDefault(0.U)
+
+when (load) {
+	next := din
+} .elsewhen (! done) {
+	next := cntReg - 1.U
+}
+cntReg := next
+```
+
+### 脉冲宽度调制
+
+脉宽调制（PWM）是一种具有恒定周期的信号，并对该周期内信号的高电平时间进行调制。
+信号为高电平的时间百分比称为占空比（duty cycle）。
+
+```scala
+def pwm(nrCycles: Int, din: UInt) = {
+	val cntReg = RegInit(0.U(unsignedBitLength(nrCycles -1).W))
+	cntReg := Mux(cntReg === (nrCycles -1).U, 0.U, cntReg + 1.U)
+	din > cntReg	//	return value
+}
+
+val din  = 3.U
+val dout = pwm(10, din)
+```
+
+我们定义了一个 PWM 生成器的函数。
+该函数有两个参数：一个 Scala 整数，用于配置 PWM 的时钟周期数（`nrCycles`）；以及一个 Chisel Wire（`din`），用于给出 PWM 输出信号的占空比（脉冲宽度）。
+
+我们使用函数 `unsignedBitLength(n)` 来指定计数器 `cntReg` 所需的位数（对于无符号数n，至少需要 $\lfloor\log_2\rfloor(n)+1$位）。
+Chisel 还有一个函数 `signedBitLength` 用于提供有符号数的位数。
+
+### 移位寄存器
+
+移位寄存器的一个使用场景是数据的串并转换。
+最简单的移位寄存器用 Chisel 很容易实现。
+
+```scala
+val shiftReg = Reg(UInt(4.W))
+shiftReg    := shiftReg(2, 0) ## din
+val dout     = shiftReg(3)
+```
+
+串进并出的移位寄存器实现如下：
+
+```scala
+val outReg = RegInit(0.U(4.W))
+outReg    := serIn ## outReg (3, 1)
+val q      = outReg
+```
+
+并进串出的移位寄存器实现如下：
+
+```scala
+val loadReg = RegInit(0.U(4.W))
+when (load) {
+	loadReg := d
+} otherwise {
+	loadReg := 0.U ## loadReg(3, 1)
+}
+val serOut = loadReg(0)
+```
+
+### 内存
+
+Chisel 提供了 `SyncReadMem` 用来快速构建寄存器阵列。
+如下是一个同步读写内存的例子：
+
+```scala
+class Memory() extends Module {
+	val io = IO(new Bundle {
+		val rdAddr = Input(UInt(10.W))
+		val rdData = Output(UInt(8.W))
+		val wrAddr = Input(UInt(10.W))
+		val wrData = Input(UInt(8.W))
+		val wrEna  = Input(Bool())
+	})
+
+	val mem = SyncReadMem(1024, UInt(8.W))
+
+	io.rdData := mem.read(io.rdAddr)
+
+	when(io.wrEna) {
+		mem.write(io.wrAddr, io.wrData)
+	}
+}
+```
+
+一个有趣的问题是，当在同一时钟周期内读写同一地址时，读的返回值是什么。
+如果我们想读出新写入的值，我们可以构建一个前递（forward）电路，检测地址是否相等并前递写入的数据。
+
+```scala
+class ForwardingMemory() extends Module {
+	val io = IO(new Bundle {
+		val rdAddr = Input(UInt(10.W))
+		val rdData = Output(UInt(8.W))
+		val wrAddr = Input(UInt(10.W))
+		val wrData = Input(UInt(8.W))
+		val wrEna  = Input(Bool())
+	})
+
+	val mem = SyncReadMem (1024, UInt(8.W))
+
+	val wrDataReg = RegNext(io.wrData)
+	val doForwardReg = RegNext(io.wrAddr === io.rdAddr && io.wrEna)
+	val memData = mem.read(io.rdAddr)
+
+	when(io.wrEna) {
+		mem.write(io.wrAddr , io.wrData)
+	}
+
+	io.rdData := Mux(doForwardReg, wrDataReg, memData)
+}
+```
