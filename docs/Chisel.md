@@ -2,6 +2,13 @@
 
 Chisel是一个**硬件构建语言**（Hardware Construct Language），它是 Scala 的一个库。Chisel 的设计目标是利用 Scala 的强大特性，同时又能够生成高效的硬件描述。Chisel 的设计思想是将硬件描述看作是一个函数式的数据结构，这样可以利用 Scala 的函数式特性来描述硬件。
 
+Chisel 教程各个章节的内容如下：
+
+- [基本组成](#基本组成)：基本的数据类型、组合逻辑、寄存器、Bundle 和 Vec 结构、Wire, Reg 和 IO。
+- [模块](#模块)：介绍 Module 类。
+- [组合逻辑基本模块](#组合逻辑基本模块)：一些简单的组合逻辑模块的实例。
+- []()：未完待续。
+
 ## 基本组成
 
 ### 数据类型
@@ -98,7 +105,7 @@ val cntReg = RegInit(0.U(8.W))
 cntReg := Mux(cntReg === 9.U, 0.U, cntReg + 1.U)
 ```
 
-> 有关 `Mux` 的介绍，请参考[多选器](###多选器)。
+> 有关 `Mux` 的介绍，请参考[多选器](#多选器)。
 
 ### Bundle 和 Vec 结构
 
@@ -557,3 +564,4 @@ notGranted(i) := !grant(i) && notGranted(i-1)
 val equ = a === b
 val gt = a > b
 ```
+
