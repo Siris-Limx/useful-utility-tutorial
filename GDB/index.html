@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.5">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.8">
     
     
       
@@ -24,7 +24,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.50c56a3b.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.f2e4d321.min.css">
       
       
 
@@ -415,7 +415,7 @@
 
   <h1>GDB</h1>
 
-<h2 id="_1">查看内存中的数据</h2>
+<h2 id="_1">查看内存中的数据<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <p>在 GDB 中，您可以使用 x 命令来查看内存中的数据。x 命令后面可以跟一个或多个参数，用于指定要查看的内存地址和格式。</p>
 <p>以下是一些常见的使用方式：</p>
 <ul>
@@ -425,7 +425,7 @@
 <li><code>x/10g 0x12345</code>：以巨字（8 字节）为单位，查看地址 0x12345 开始的 10 个巨字的内容。</li>
 <li><code>x/i</code>：一种特殊的格式，用于将内存中的内容解释为机器指令。i 代表 "instruction"，即指令。例如，<code>x/i $pc</code> 这条命令会显示程序计数器（PC）当前指向的机器指令。</li>
 </ul>
-<h2 id="_2">查看寄存器中的数据</h2>
+<h2 id="_2">查看寄存器中的数据<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
 <p>使用 x 命令来查看寄存器中的内容。
@@ -441,7 +441,7 @@
 <p>如果您只想查看某个特定寄存器的值，可以使用 print 命令。例如，<code>print $r0</code> 会显示 r0 寄存器的值（在 ARM 架构中）。</p>
 </li>
 </ul>
-<h2 id="_3">写入内存或寄存器</h2>
+<h2 id="_3">写入内存或寄存器<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <ul>
 <li>使用 set 命令来写入内存。例如，<code>set {int}0x12345 = 0</code> 会将地址 0x12345 处的 4 个字节的内容设置为 0，<code>set {int}0x54321 = 0xabcdf</code> 会将地址 0x54321 处的 4 个字节的内容设置为 16 进制的 abcdf。</li>
 <li>使用 set 命令来写入寄存器。例如，<code>set $r0 = 0</code> 会将 r0 寄存器的值设置为 0。</li>
@@ -502,7 +502,13 @@
     <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.c18c5fb9.min.js"></script>
+      <script src="../assets/javascripts/bundle.8fd75fb4.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       
     
   </body>
