@@ -8,6 +8,7 @@
 - [GDB](GDB.md)
 - [Makefile](Makefile.md)
 - [VCS](VCS.md)
+- [Verdi](Verdi.md)
 - [Verilator](Verilator.md)
 
 
@@ -15,13 +16,21 @@
 
 ### 当前版本
 
+#### v0.4.0
+
+新增Verdi章节。
+
+- 在`首页`中添加索引。
+- 
+
+### 历史版本
+
 #### v0.3.1
 
 在VCS章节中添加了一些内容。
+
 - VCS与VCS-MX的解释和区别。
 - 波形文件的生成。
-
-### 历史版本
 
 #### v0.3.0
 
