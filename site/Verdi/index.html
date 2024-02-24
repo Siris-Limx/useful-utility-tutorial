@@ -9,10 +9,10 @@
       
       
       
-        <link rel="prev" href="../Chisel/">
+        <link rel="prev" href="../VCS/">
       
       
-        <link rel="next" href="../Makefile/">
+        <link rel="next" href="../Verilator/">
       
       
       <link rel="icon" href="../assets/images/favicon.png">
@@ -20,7 +20,7 @@
     
     
       
-        <title>GDB - Useful Utility Tutorial</title>
+        <title>Verdi - Useful Utility Tutorial</title>
       
     
     
@@ -98,7 +98,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              GDB
+              Verdi
             
           </span>
         </div>
@@ -248,28 +248,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    GDB
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../GDB/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -278,51 +260,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      查看内存中的数据
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      查看寄存器中的数据
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      写入内存或寄存器
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -371,10 +308,28 @@
       
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../Verdi/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Verdi
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -383,6 +338,75 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      总体介绍
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="总体介绍">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      编译器和接口
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      数据库
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      分析引擎
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      可视化
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -434,27 +458,51 @@
         <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
-      查看内存中的数据
+      总体介绍
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
+    <nav class="md-nav" aria-label="总体介绍">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
-      查看寄存器中的数据
+      编译器和接口
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
-      写入内存或寄存器
+      数据库
     </span>
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      分析引擎
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      可视化
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -473,46 +521,31 @@
                   
 
 
-  <h1>GDB</h1>
+  <h1>Verdi</h1>
 
-<h2 id="_1">查看内存中的数据<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
-<p>在 GDB 中，您可以使用 x 命令来查看内存中的数据。x 命令后面可以跟一个或多个参数，用于指定要查看的内存地址和格式。</p>
-<p>以下是一些常见的使用方式：</p>
+<h2 id="_1">总体介绍<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>Verdi是一个自动调试平台（automated debug platform），用于观察波形、调试 RTL。</p>
+<p><img alt="Verdi_tech" src="../img/verdi_tech.png" /></p>
+<h3 id="_2">编译器和接口<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
 <ul>
-<li><code>x/10b 0x12345</code>：以字节为单位，查看地址 0x12345 开始的 10 个字节的内容。</li>
-<li><code>x/10h 0x12345</code>：以半字（2 字节）为单位，查看地址 0x12345 开始的 10 个半字的内容。</li>
-<li><code>x/10w 0x12345</code>：以字（4 字节）为单位，查看地址 0x12345 开始的 10 个字的内容。</li>
-<li><code>x/10g 0x12345</code>：以巨字（8 字节）为单位，查看地址 0x12345 开始的 10 个巨字的内容。</li>
-<li><code>x/i</code>：一种特殊的格式，用于将内存中的内容解释为机器指令。i 代表 "instruction"，即指令。例如，<code>x/i $pc</code> 这条命令会显示程序计数器（PC）当前指向的机器指令。</li>
+<li>编译器：Verdi为大多数设计和验证环境中使用的语言提供编译器，如Verilog、VHDL和SystemVerilog以及电源代码（CPF或UPF）。在分析和编译代码时，会检查语法和语义错误。</li>
+<li>接口：Verdi可以导入其他仿真器生成的标准VCD和SDF数据，并将结果存储在快速信号数据库（Fast Signal Database，FSDB）中。也可以通过对象文件（object files）链接到仿真器（例如VCS）直接生成FSDB。</li>
 </ul>
-<h2 id="_2">查看寄存器中的数据<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<h3 id="_3">数据库<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
 <ul>
-<li>
-<p>使用 x 命令来查看寄存器中的内容。
-例如，<code>x/1w $sp</code> 会显示栈指针（SP）当前指向的内存位置的内容。</p>
-</li>
-<li>
-<p>使用 info registers 命令来查看所有寄存器的当前值。这个命令会显示所有通用寄存器和一些特殊寄存器（如程序计数器）的值。</p>
-</li>
-<li>
-<p><code>info all-registers</code> 列出所有寄存器的值，包括通用寄存器（如x0到x31），特权模式寄存器（如mstatus、mcause等），以及其他CSR寄存器。</p>
-</li>
-<li>
-<p>如果您只想查看某个特定寄存器的值，可以使用 print 命令。例如，<code>print $r0</code> 会显示 r0 寄存器的值（在 ARM 架构中）。</p>
-</li>
+<li>知识数据库（Knowledge Database，KDB）：在编译时，Verdi会识别和提取设计的特定结构、逻辑和功能信息，并将由此产生的详细设计信息存储在KDB中。</li>
+<li>快速信号数据库（Fast Signal Database，FSDB）：FSDB以高效紧凑的格式存储仿真结果。Synopsys提供可以链接到常见仿真器的对象文件用来直接以FSDB格式存储仿真结果。你也可以通过转换VCD文件的方式生成FSDB。</li>
 </ul>
-<h2 id="_3">写入内存或寄存器<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<h3 id="_4">分析引擎<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p>使用来自KDB和FSDB的信息进行分析。</p>
+<h3 id="_5">可视化<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<p>Verdi中有如下的结构可视化和分析工具：</p>
 <ul>
-<li>使用 set 命令来写入内存。例如，<code>set {int}0x12345 = 0</code> 会将地址 0x12345 处的 4 个字节的内容设置为 0，<code>set {int}0x54321 = 0xabcdf</code> 会将地址 0x54321 处的 4 个字节的内容设置为 16 进制的 abcdf。</li>
-<li>使用 set 命令来写入寄存器。例如，<code>set $r0 = 0</code> 会将 r0 寄存器的值设置为 0。</li>
-<li>使用 set 命令来写入特殊寄存器。例如，<code>set $pc = 0x12345</code> 会将程序计数器（PC）的值设置为 0x12345。/x 用于16进制格式，/d 用于十进制格式等</li>
+<li>nTrace：用于源代码</li>
+<li>nWave：用于波形</li>
+<li>nSchema：用于原理逻辑图</li>
+<li>nState：用于有限状态机（FSM）</li>
 </ul>
-<blockquote>
-<p>ROM（只读存储器）是一种只能读取不能写入的存储器。
-如果你试图在 GDB 中使用 set 命令写入 ROM 地址的数据，GDB 可能不会显示错误，但实际上数据并没有被写入 ROM。
-当你使用 x 命令读取该地址时，GDB 可能会显示你之前尝试写入的数据，但这只是 GDB 内部状态的一部分，不代表实际的硬件状态。
-在真实的硬件中，ROM 的内容在写入后就不能更改。</p>
-</blockquote>
 
 
 
